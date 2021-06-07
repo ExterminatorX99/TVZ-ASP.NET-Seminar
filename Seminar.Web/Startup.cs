@@ -10,8 +10,11 @@ using Microsoft.Extensions.Hosting;
 using Seminar.DAL;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Localization;
+using Seminar.Model;
 
 namespace Seminar.Web
 {
@@ -29,9 +32,10 @@ namespace Seminar.Web
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    builder => builder.MigrationsAssembly("Seminar.DAL")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
         }
@@ -59,8 +63,18 @@ namespace Seminar.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
+            var supportedCultures = new[] {new CultureInfo("hr"), new CultureInfo("en"), new CultureInfo("en-US"), new CultureInfo("en-GB")};
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("hr"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
                 endpoints.MapRazorPages();
             });
         }
