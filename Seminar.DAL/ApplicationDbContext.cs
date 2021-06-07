@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Seminar.Web.Data
+namespace Seminar.DAL
 {
     public class ApplicationDbContext : IdentityDbContext
     {
