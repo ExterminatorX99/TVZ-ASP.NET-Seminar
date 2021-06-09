@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Seminar.DAL;
 
 namespace Seminar.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210608212834_Idk")]
+    partial class Idk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,10 +28,6 @@ namespace Seminar.DAL.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -48,8 +46,6 @@ namespace Seminar.DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -431,57 +427,6 @@ namespace Seminar.DAL.Migrations
                     b.HasIndex("CityID");
 
                     b.ToTable("Writers");
-                });
-
-            modelBuilder.Entity("Seminar.Model.AppRole", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
-
-                    b.HasDiscriminator().HasValue("AppRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a197098d-6910-498c-9632-b3739fa6e0af",
-                            ConcurrencyStamp = "85ae7506-0684-41f0-8b0b-a648e336f392",
-                            Name = "Admin",
-                            NormalizedName = "Administrator"
-                        },
-                        new
-                        {
-                            Id = "d94c9a42-03d4-46c0-811d-cef074c912c8",
-                            ConcurrencyStamp = "b29c93db-0b58-4b2a-b179-13d773dc4105",
-                            Name = "Writer",
-                            NormalizedName = "Writer"
-                        },
-                        new
-                        {
-                            Id = "e904d01f-c86e-412e-9202-80e975492f59",
-                            ConcurrencyStamp = "c4325860-85ab-457b-a150-c8becff2acb5",
-                            Name = "Editor",
-                            NormalizedName = "Editor"
-                        },
-                        new
-                        {
-                            Id = "fc06cd40-a86a-4a31-a7f9-9c21eaa50a48",
-                            ConcurrencyStamp = "a4171cbb-60ab-4911-b1cf-c0866ac32e45",
-                            Name = "Reviewer",
-                            NormalizedName = "Reviewer"
-                        },
-                        new
-                        {
-                            Id = "3c916073-dbca-4f51-820f-e85014fdbc27",
-                            ConcurrencyStamp = "9024554a-3d18-4737-8d70-b4144e687896",
-                            Name = "User",
-                            NormalizedName = "User"
-                        },
-                        new
-                        {
-                            Id = "ffd3c364-ed31-49ab-96d9-6103139cdf53",
-                            ConcurrencyStamp = "6704ba6e-1d0f-4f66-ad42-0b03e42ad951",
-                            Name = "Guest",
-                            NormalizedName = "Visitor"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
