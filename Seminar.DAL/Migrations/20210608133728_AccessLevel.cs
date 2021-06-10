@@ -11,7 +11,7 @@ namespace Seminar.DAL.Migrations
                 table: "AspNetUsers",
                 type: "int",
                 nullable: false,
-                defaultValue: Model.AccessLevel.Guest);
+                defaultValue: 5);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

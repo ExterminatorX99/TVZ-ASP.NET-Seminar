@@ -1,0 +1,27 @@
+﻿@using System.Globalization
+@model Seminar.Model.Article
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    DateTimeFormatInfo format = CultureInfo.CurrentCulture.DateTimeFormat;
+}
+
+<style>
+    .content:first-letter {
+        color: #903;
+        float: left;
+        font-family: Georgia;
+        font-size: 75px;
+        line-height: 60px;
+        padding-left: 3px;
+        padding-right: 8px;
+        padding-top: 4px;
+    }
+</style>
+
+<h1>@Model.Title</h1>
+<h3>@Model.Summary</h3>
+<p>@Model.Writer.FullName - published on: @Model.PublishDateTime.ToString(format.ShortDatePattern) at @Model.PublishDateTime.ToString(format.ShortTimePattern)</p>
+<p class="content">@Model.Content</p>

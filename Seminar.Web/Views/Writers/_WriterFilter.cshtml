@@ -1,0 +1,26 @@
+﻿@using Seminar.Model
+@model Seminar.Web.Models.WriterFilterModel
+
+<form asp-action="Index" method="post">
+    <div class="form-row">
+        <div class="col-3">
+            <input asp-for="FullName" class="form-control" placeholder="First and last name"/>
+        </div>
+        <div class="col-3">
+            <select asp-for="Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()"></select>
+        </div>
+        <div class="col-2">
+            <input asp-for="Email" class="form-control" placeholder="Email"/>
+        </div>
+        <div class="col-2">
+            <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number"/>
+        </div>
+        <div class="col-2">
+            <input asp-for="CityName" class="form-control" placeholder="City"/>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-outline-info">Search</button>
+            <a asp-action="Create" class="btn btn-success">Create</a>
+        </div>
+    </div>
+</form>

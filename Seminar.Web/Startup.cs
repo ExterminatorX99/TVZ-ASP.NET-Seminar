@@ -1,13 +1,13 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Seminar.DAL;
-using Seminar.Model;
 
 namespace Seminar.Web
 {
@@ -25,13 +25,27 @@ namespace Seminar.Web
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
+                    Configuration.GetConnectionString("AzureConnection"),
                     builder => builder.MigrationsAssembly("Seminar.DAL")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<AppRole>()
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages();
+            services.AddRazorPages().AddViewOptions(options =>
+            {
+                options.HtmlHelperOptions.ClientValidationEnabled = true;
+            });
+            services.AddApplicationInsightsTelemetry();
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +83,7 @@ namespace Seminar.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
+                endpoints.MapControllerRoute("administracija", "administracija/{action=Index}", new {controller = "Users"});
                 endpoints.MapRazorPages();
             });
         }

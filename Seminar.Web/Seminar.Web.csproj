@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Writers\_WriterFilter.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Writers\_WriterFilter.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="humanizer" Version="2.11.10" />
+    <PackageReference Include="Humanizer.Core" Version="2.11.10" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.17.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.6" />

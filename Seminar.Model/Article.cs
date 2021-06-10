@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
@@ -24,22 +25,21 @@ namespace Seminar.Model
 
         public DateTime PublishDateTime { get; set; }
 
+        [Display(Name = "Writer")]
         [ForeignKey(nameof(Writer))]
         public int WriterID { get; set; }
 
+        [Display(Name = "Category")]
         [ForeignKey(nameof(Category))]
         public int CategoryID { get; set; }
-
-        [ForeignKey(nameof(HeaderImage))]
-        public int HeaderImageID { get; set; }
 
         public virtual Writer Writer { get; set; }
 
         public virtual Category Category { get; set; }
 
-        public virtual Image HeaderImage { get; set; }
-
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public string ContentTruncated => Content.Truncate(64);
     }
 
     public static class ArticleExtensions
@@ -48,16 +48,14 @@ namespace Seminar.Model
         ///     Includes
         ///     <see cref="Article.Writer" />
         ///     <see cref="Article.Category" />
-        ///     <see cref="Article.HeaderImage" />
         /// </summary>
         /// <param name="articles"></param>
         /// <returns></returns>
-        public static IIncludableQueryable<Article, Image> IncludeAll(this DbSet<Article> articles)
+        public static IIncludableQueryable<Article, object> IncludeAll(this DbSet<Article> articles)
         {
             return articles
                 .Include(a => a.Writer)
-                .Include(a => a.Category)
-                .Include(a => a.HeaderImage);
+                .Include(a => a.Category);
         }
     }
 

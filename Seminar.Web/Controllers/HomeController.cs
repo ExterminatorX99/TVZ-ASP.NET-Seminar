@@ -1,19 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Seminar.DAL;
+using Seminar.Model;
 
 namespace Seminar.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : SeminarController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext) : base(logger, dbContext)
         {
-            _logger = logger;
         }
 
         public IActionResult Index() => View();

@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "appInsights1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/microsoft.insights/components/SeminarWeb",
+      "type": "appInsights.azure",
+      "connectionId": "APPINSIGHTS_CONNECTIONSTRING",
+      "secretStore": "AzureAppSettings"
+    },
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/seminarwebazure/databases/coreDB",
+      "type": "mssql.azure",
+      "connectionId": "DefaultConnection",
+      "secretStore": "AzureAppSettings"
+    },
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/seminarwebazure/databases/coreDB",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:AzureConnection",
+      "secretStore": "AzureAppSettings"
+    },
+    "mssql3": {
+      "type": "mssql.onprem",
+      "connectionId": "ConnectionStrings:DefaultConnection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

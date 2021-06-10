@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Seminar.Model
+@model IEnumerable<Seminar.Model.Article>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    bool signedIn = SignInManager.IsSignedIn(User);
+    bool admin = signedIn && User.IsInRole("Admin");
+    bool editor = signedIn && (User.IsInRole("Editor") || User.IsInRole("Writer") || admin);
+}
+
+<h1>List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Summary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PublishDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Writer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Article item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentTruncated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Writer.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                <a asp-action="View" asp-route-id="@item.ID">View</a> |
+                @if (editor)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                    @:|
+                }
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                @if (admin)
+                {
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

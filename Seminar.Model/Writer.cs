@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Seminar.Model
 {
@@ -18,7 +20,8 @@ namespace Seminar.Model
 
         [Required]
         public Gender Gender { get; set; }
-
+        
+        [Required]
         [MaxLength(256)]
         public string Email { get; set; }
 
@@ -28,7 +31,7 @@ namespace Seminar.Model
         [ForeignKey(nameof(City))]
         public int CityID { get; set; }
 
-        public City City { get; set; }
+        public virtual City City { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
 
@@ -42,6 +45,23 @@ namespace Seminar.Model
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
+    }
+
+    public static class WriterExtensions
+    {
+        /// <summary>
+        ///     Includes
+        ///     <see cref="Article.Writer" />
+        ///     <see cref="Article.Category" />
+        ///     <see cref="Article.HeaderImage" />
+        /// </summary>
+        /// <param name="writers"></param>
+        /// <returns></returns>
+        public static IIncludableQueryable<Writer, object> IncludeAll(this DbSet<Writer> writers)
+        {
+            return writers
+                .Include(w => w.City);
+        }
     }
 
     public enum Gender
