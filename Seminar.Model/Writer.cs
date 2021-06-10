@@ -29,6 +29,7 @@ namespace Seminar.Model
         public string PhoneNumber { get; set; }
 
         [ForeignKey(nameof(City))]
+        [Required]
         public int CityID { get; set; }
 
         public virtual City City { get; set; }

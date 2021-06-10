@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,17 +19,6 @@ namespace Seminar.Web.Controllers
         public IActionResult Index(WriterFilterModel filter)
         {
             IQueryable<Writer> writerQuery = _dbContext.Writers.IncludeAll();
-
-            //if (!string.IsNullOrWhiteSpace(filter.FullName))
-            //    writerQuery = writerQuery.Where(w => (w.FirstName + " " + w.LastName).Contains(filter.FullName, StringComparison.OrdinalIgnoreCase));
-            ////if (filter.Gender)
-            //writerQuery = writerQuery.Where(w => w.Gender == filter.Gender);
-            //if (!string.IsNullOrWhiteSpace(filter.Email))
-            //    writerQuery = writerQuery.Where(w => w.Email.Contains(filter.Email, StringComparison.OrdinalIgnoreCase));
-            //if (!string.IsNullOrWhiteSpace(filter.PhoneNumber))
-            //    writerQuery = writerQuery.Where(w => w.PhoneNumber.Contains(filter.PhoneNumber, StringComparison.OrdinalIgnoreCase));
-            //if (!string.IsNullOrWhiteSpace(filter.CityName))
-            //    writerQuery = writerQuery.Where(w => w.City.Name.Contains(filter.CityName, StringComparison.OrdinalIgnoreCase));
 
             return View(writerQuery.ToList());
         }
